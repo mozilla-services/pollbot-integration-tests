@@ -1,8 +1,5 @@
-import asyncio
 import pytest
 from six import string_types
-from pytest_testrail.plugin import pytestrail
-from smwogger import API
 
 
 def aslist_cronly(value):
@@ -26,20 +23,8 @@ def aslist(value, flatten=True):
     return result
 
 
-@pytest.fixture(scope="module")
-def event_loop():
-    return asyncio.get_event_loop()
-
-
-@pytest.fixture(scope="module")
-def api(event_loop, conf, env, request):
-    api_definition = 'pollbot_api_definition'
-    return API(conf.get(env, api_definition), loop=event_loop)
-
-
 @pytest.mark.asyncio
 @pytest.mark.pollbot
-@pytestrail.case('C122557')
 async def test_version(api, conf, env, apiversion):
     res = await api.version()
     data = await res.json()
@@ -60,7 +45,6 @@ async def test_version(api, conf, env, apiversion):
 
 @pytest.mark.asyncio
 @pytest.mark.pollbot
-@pytestrail.case('C122558')
 async def test_heartbeat(api, conf, env):
     res = await api.heartbeat()
     data = await res.json()
@@ -77,7 +61,6 @@ async def test_heartbeat(api, conf, env):
 
 @pytest.mark.asyncio
 @pytest.mark.pollbot
-@pytestrail.case('C122559')
 async def test_server_info(api, conf, env):
     res = await api.getServerInfo()
     data = await res.json()
@@ -92,7 +75,6 @@ async def test_server_info(api, conf, env):
 
 @pytest.mark.asyncio
 @pytest.mark.pollbot
-@pytestrail.case('C122560')
 async def test_contribute(api, conf, env):
     res = await api.contribute()
     data = await res.json()
