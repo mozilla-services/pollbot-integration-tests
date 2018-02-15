@@ -1,0 +1,7 @@
+.cache
+.git
+*.pyc
+**/__pycache__
+*.egg-info
+.DS_Store
+Jenkinsfile
