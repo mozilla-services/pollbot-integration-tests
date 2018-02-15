@@ -20,20 +20,25 @@ async def test_product_releases(api, conf, env, apiversion):
 
 @pytest.mark.asyncio
 @pytest.mark.pollbot
-async def test_ongoing_versions(api, conf, env, apiversion):
-    # Get products
-    res = await api.getServerInfo()
+@pytest.mark.firefox
+async def test_firefox_ongoing_versions(api, conf, env, apiversion):
+    res = await api.getProductOngoingVersions(vars={"product": "firefox"})
     data = await res.json()
 
-    # For each product, get the product releases
-    for product in data["products"]:
-        res = await api.getProductOngoingVersions(vars={"product": product})
-        data = await res.json()
+    assert "nightly" in data
+    assert "beta" in data
+    assert "release" in data
+    assert "esr" in data
 
-        assert "releases" in data
-        for release in data["releases"]:
-            assert isinstance(release, str)
 
+@pytest.mark.asyncio
+@pytest.mark.pollbot
+@pytest.mark.devedition
+async def test_devedition_ongoing_versions(api, conf, env, apiversion):
+    res = await api.getProductOngoingVersions(vars={"product": "devedition"})
+    data = await res.json()
+
+    assert "devedition" in data
 
 # dict_keys(['getServerInfo', 'heartbeat', 'lbheartbeat', 'version',
 # 'contribute', 'doc', 'getProductReleases',
