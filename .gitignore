@@ -10,3 +10,4 @@ __pycache__/
 mail/
 venv/
 *.sw[op]
+.pytest_cache/

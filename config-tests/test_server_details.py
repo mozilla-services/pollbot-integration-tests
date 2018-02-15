@@ -1,6 +1,6 @@
 import asyncio
 import pytest
-from pyramid.compat import string_types
+from six import string_types
 from pytest_testrail.plugin import pytestrail
 from smwogger import API
 
@@ -34,7 +34,6 @@ def event_loop():
 @pytest.fixture(scope="module")
 def api(event_loop, conf, env, request):
     api_definition = 'pollbot_api_definition'
-
     return API(conf.get(env, api_definition), loop=event_loop)
 
 
@@ -42,7 +41,7 @@ def api(event_loop, conf, env, request):
 @pytest.mark.pollbot
 @pytestrail.case('C122557')
 async def test_version(api, conf, env, apiversion):
-    res = await api.__version__()
+    res = await api.version()
     data = await res.json()
     expected_fields = aslist(conf.get(env, 'version_fields'))
 
@@ -63,7 +62,7 @@ async def test_version(api, conf, env, apiversion):
 @pytest.mark.pollbot
 @pytestrail.case('C122558')
 async def test_heartbeat(api, conf, env):
-    res = await api.__heartbeat__()
+    res = await api.heartbeat()
     data = await res.json()
     expected_fields = aslist(conf.get(env, 'heartbeat_fields'))
 
@@ -80,7 +79,7 @@ async def test_heartbeat(api, conf, env):
 @pytest.mark.pollbot
 @pytestrail.case('C122559')
 async def test_server_info(api, conf, env):
-    res = await api.server_info()
+    res = await api.getServerInfo()
     data = await res.json()
     expected_fields = aslist(conf.get(env, 'server_info_fields'))
 
