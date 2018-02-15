@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 pytest = "*"
-requests = "*"
+aiohttp = "<3"
 pytest-testrail = "*"
 smwogger = "*"
 pytest-asyncio = "*"

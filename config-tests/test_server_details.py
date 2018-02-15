@@ -26,9 +26,10 @@ def aslist(value, flatten=True):
 @pytest.mark.asyncio
 @pytest.mark.pollbot
 async def test_version(api, conf, env, apiversion):
-    res = await api.version()
-    data = await res.json()
-    expected_fields = aslist(conf.get(env, 'version_fields'))
+    async with api() as api:
+        res = await api.version()
+        data = await res.json()
+        expected_fields = aslist(conf.get(env, 'version_fields'))
 
     # First, make sure that data only contains fields we expect
     for key in data:
@@ -46,9 +47,10 @@ async def test_version(api, conf, env, apiversion):
 @pytest.mark.asyncio
 @pytest.mark.pollbot
 async def test_heartbeat(api, conf, env):
-    res = await api.heartbeat()
-    data = await res.json()
-    expected_fields = aslist(conf.get(env, 'heartbeat_fields'))
+    async with api() as api:
+        res = await api.heartbeat()
+        data = await res.json()
+        expected_fields = aslist(conf.get(env, 'heartbeat_fields'))
 
     # First, make sure that data only contains fields we expect
     for key in data:
@@ -62,9 +64,10 @@ async def test_heartbeat(api, conf, env):
 @pytest.mark.asyncio
 @pytest.mark.pollbot
 async def test_server_info(api, conf, env):
-    res = await api.getServerInfo()
-    data = await res.json()
-    expected_fields = aslist(conf.get(env, 'server_info_fields'))
+    async with api() as api:
+        res = await api.getServerInfo()
+        data = await res.json()
+        expected_fields = aslist(conf.get(env, 'server_info_fields'))
 
     for key in data:
         assert key in expected_fields
@@ -76,9 +79,10 @@ async def test_server_info(api, conf, env):
 @pytest.mark.asyncio
 @pytest.mark.pollbot
 async def test_contribute(api, conf, env):
-    res = await api.contribute()
-    data = await res.json()
-    expected_fields = aslist(conf.get(env, 'contribute_fields'))
+    async with api() as api:
+        res = await api.contribute()
+        data = await res.json()
+        expected_fields = aslist(conf.get(env, 'contribute_fields'))
 
     for key in data:
         assert key in expected_fields
