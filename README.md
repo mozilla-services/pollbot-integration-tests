@@ -25,8 +25,7 @@ You can run these tests using the following commands from inside the root direct
 ```shell
 pipenv install
 pipenv shell
-pytest -m TEST_TYPE --env=TEST_ENV
+pytest --env=TEST_ENV
 ```
 
-* `TEST_TYPE` is `pollbot` for `PollBot` deployments
 * `TEST_ENV` is one of the environments listed in the `manifest.ini` file.

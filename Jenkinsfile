@@ -21,11 +21,8 @@ pipeline {
       }
     }
     stage('Test pollbot') {
-      when {
-        environment name: 'PROJECT', value: 'pollbot'
-      }
       steps {
-        sh "pytest -m pollbot --env=${TEST_ENV}"
+        sh "pytest --env=${TEST_ENV}"
       }
     }
   }

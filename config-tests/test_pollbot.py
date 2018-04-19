@@ -2,7 +2,6 @@ import pytest
 
 
 @pytest.mark.asyncio
-@pytest.mark.pollbot
 async def test_product_releases(api, conf, env, apiversion):
     async with api() as api:
         # Get products
@@ -20,8 +19,6 @@ async def test_product_releases(api, conf, env, apiversion):
 
 
 @pytest.mark.asyncio
-@pytest.mark.pollbot
-@pytest.mark.firefox
 async def test_firefox_ongoing_versions(api, conf, env, apiversion):
     async with api() as api:
         res = await api.getProductOngoingVersions(vars={"product": "firefox"})
@@ -34,8 +31,6 @@ async def test_firefox_ongoing_versions(api, conf, env, apiversion):
 
 
 @pytest.mark.asyncio
-@pytest.mark.pollbot
-@pytest.mark.devedition
 async def test_devedition_ongoing_versions(api, conf, env, apiversion):
     async with api() as api:
         res = await api.getProductOngoingVersions(vars={"product": "devedition"})
@@ -73,35 +68,25 @@ async def product_version_checks(api, get_session, product, channel):
 
 
 @pytest.mark.asyncio
-@pytest.mark.pollbot
-@pytest.mark.nightly
 async def test_firefox_nightly_checks(api, conf, env, apiversion, get_session):
     await product_version_checks(api, get_session, "firefox", "nightly")
 
 
 @pytest.mark.asyncio
-@pytest.mark.pollbot
-@pytest.mark.beta
 async def test_firefox_beta_checks(api, conf, env, apiversion, get_session):
     await product_version_checks(api, get_session, "firefox", "beta")
 
 
 @pytest.mark.asyncio
-@pytest.mark.pollbot
-@pytest.mark.release
 async def test_firefox_release_checks(api, conf, env, apiversion, get_session):
     await product_version_checks(api, get_session, "firefox", "release")
 
 
 @pytest.mark.asyncio
-@pytest.mark.pollbot
-@pytest.mark.esr
 async def test_firefox_esr_checks(api, conf, env, apiversion, get_session):
     await product_version_checks(api, get_session, "firefox", "esr")
 
 
 @pytest.mark.asyncio
-@pytest.mark.pollbot
-@pytest.mark.devedition
 async def test_devedition_checks(api, conf, env, apiversion, get_session):
     await product_version_checks(api, get_session, "devedition", "devedition")

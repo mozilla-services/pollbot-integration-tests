@@ -24,7 +24,6 @@ def aslist(value, flatten=True):
 
 
 @pytest.mark.asyncio
-@pytest.mark.pollbot
 async def test_version(api, conf, env, apiversion):
     async with api() as api:
         res = await api.version()
@@ -45,7 +44,6 @@ async def test_version(api, conf, env, apiversion):
 
 
 @pytest.mark.asyncio
-@pytest.mark.pollbot
 async def test_heartbeat(api, conf, env):
     async with api() as api:
         res = await api.heartbeat()
@@ -62,7 +60,6 @@ async def test_heartbeat(api, conf, env):
 
 
 @pytest.mark.asyncio
-@pytest.mark.pollbot
 async def test_server_info(api, conf, env):
     async with api() as api:
         res = await api.getServerInfo()
@@ -77,7 +74,6 @@ async def test_server_info(api, conf, env):
 
 
 @pytest.mark.asyncio
-@pytest.mark.pollbot
 async def test_contribute(api, conf, env):
     async with api() as api:
         res = await api.contribute()
