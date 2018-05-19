@@ -1,3 +1,7 @@
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/mozilla-services/pollbot-integration-tests/blob/master/LICENSE)
+[![Updates](https://pyup.io/repos/github/mozilla-services/pollbot-integration-tests/shield.svg)](https://pyup.io/repos/github/mozilla-services/pollbot-integration-tests/)
+[![Python 3](https://pyup.io/repos/github/mozilla-services/pollbot-integration-tests/python-3-shield.svg)](https://pyup.io/repos/github/mozilla-services/pollbot-integration-tests/)
+
 # Summary
 Tests for the Pollbot server fall into 3 categories:
 
