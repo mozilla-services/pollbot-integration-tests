@@ -1,5 +1,4 @@
 import requests
-import time
 
 
 def test_product_releases(conf, env):
@@ -45,7 +44,7 @@ def product_version_checks(conf, env, product, channel):
     assert "checks" in data
 
     for check in data["checks"]:
-        #time.sleep(2)
+        # time.sleep(2)
         resp = requests.get(check["url"])
         body = resp.json()
         assert "status" in body
