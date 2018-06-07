@@ -1,4 +1,5 @@
 import pytest
+import requests
 from six import string_types
 
 
@@ -23,32 +24,10 @@ def aslist(value, flatten=True):
     return result
 
 
-@pytest.mark.asyncio
-async def test_version(api, conf, env, apiversion):
-    async with api() as api:
-        res = await api.version()
-        data = await res.json()
-        expected_fields = aslist(conf.get(env, 'version_fields'))
-
-    # First, make sure that data only contains fields we expect
-    for key in data:
-        assert key in expected_fields
-
-    # Then make the we only have the expected fields in the data
-    for field in expected_fields:
-        assert field in data
-
-    # If we're passed an API version via the CLI, verify it matches
-    if apiversion:
-        assert apiversion == data['version']
-
-
-@pytest.mark.asyncio
-async def test_heartbeat(api, conf, env):
-    async with api() as api:
-        res = await api.heartbeat()
-        data = await res.json()
-        expected_fields = aslist(conf.get(env, 'heartbeat_fields'))
+def test_version(conf, env, apiversion):
+    res = requests.get(conf.get(env, 'pollbot_server') + '/__version__')
+    data = res.json()
+    expected_fields = aslist(conf.get(env, 'version_fields'))
 
     # First, make sure that data only contains fields we expect
     for key in data:
@@ -59,12 +38,24 @@ async def test_heartbeat(api, conf, env):
         assert field in data
 
 
-@pytest.mark.asyncio
-async def test_server_info(api, conf, env):
-    async with api() as api:
-        res = await api.getServerInfo()
-        data = await res.json()
-        expected_fields = aslist(conf.get(env, 'server_info_fields'))
+def test_heartbeat(conf, env):
+    res = requests.get(conf.get(env, 'pollbot_server') + '/__heartbeat__')
+    data = res.json()
+    expected_fields = aslist(conf.get(env, 'heartbeat_fields'))
+
+    # First, make sure that data only contains fields we expect
+    for key in data:
+        assert key in expected_fields
+
+    # Then make the we only have the expected fields in the data
+    for field in expected_fields:
+        assert field in data
+
+
+def test_server_info(conf, env):
+    res = requests.get(conf.get(env, 'pollbot_server'))
+    data = res.json()
+    expected_fields = aslist(conf.get(env, 'server_info_fields'))
 
     for key in data:
         assert key in expected_fields
@@ -73,12 +64,10 @@ async def test_server_info(api, conf, env):
         assert field in data
 
 
-@pytest.mark.asyncio
-async def test_contribute(api, conf, env):
-    async with api() as api:
-        res = await api.contribute()
-        data = await res.json()
-        expected_fields = aslist(conf.get(env, 'contribute_fields'))
+def test_contribute(conf, env):
+    res = requests.get(conf.get(env, 'pollbot_server') + '/contribute.json')
+    data = res.json()
+    expected_fields = aslist(conf.get(env, 'contribute_fields'))
 
     for key in data:
         assert key in expected_fields

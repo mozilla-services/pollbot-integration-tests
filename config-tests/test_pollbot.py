@@ -1,28 +1,23 @@
-import pytest
+import requests
+import time
 
 
-@pytest.mark.asyncio
-async def test_product_releases(api, conf, env, apiversion):
-    async with api() as api:
-        # Get products
-        res = await api.getServerInfo()
-        data = await res.json()
+def test_product_releases(conf, env):
+    data = requests.get(conf.get(env, 'pollbot_server')).json()
 
-        # For each product, get the product releases
-        for product in data["products"]:
-            res = await api.getProductReleases(vars={"product": product})
-            data = await res.json()
+    # For each product, get the product releases
+    for product in data["products"]:
+        res = requests.get(conf.get(env, 'pollbot_server') + '/{0}'.format(product))
+        data = res.json()
 
         assert "releases" in data
         for release in data["releases"]:
             assert isinstance(release, str)
 
 
-@pytest.mark.asyncio
-async def test_firefox_ongoing_versions(api, conf, env, apiversion):
-    async with api() as api:
-        res = await api.getProductOngoingVersions(vars={"product": "firefox"})
-        data = await res.json()
+def test_firefox_ongoing_versions(conf, env):
+    res = requests.get(conf.get(env, 'pollbot_server') + '/firefox/ongoing-versions')
+    data = res.json()
 
     assert "nightly" in data
     assert "beta" in data
@@ -30,63 +25,50 @@ async def test_firefox_ongoing_versions(api, conf, env, apiversion):
     assert "esr" in data
 
 
-@pytest.mark.asyncio
-async def test_devedition_ongoing_versions(api, conf, env, apiversion):
-    async with api() as api:
-        res = await api.getProductOngoingVersions(vars={"product": "devedition"})
-        data = await res.json()
+def test_devedition_ongoing_versions(conf, env):
+    res = requests.get(conf.get(env, 'pollbot_server') + '/devedition/ongoing-versions')
+    data = res.json()
 
     assert "devedition" in data
 
 
-async def product_version_checks(api, get_session, product, channel):
-    async with api() as api:
-        res = await api.getProductOngoingVersions(vars={"product": product})
-        data = await res.json()
+def product_version_checks(conf, env, product, channel):
+    res = requests.get(conf.get(env, 'pollbot_server') + "/{0}/ongoing-versions".format(product))
+    data = res.json()
+    current_channel_version = data[channel]
 
-        current_channel_version = data[channel]
-
-        res = await api.getReleaseInfoAndChecks(vars={
-            "product": product,
-            "version": current_channel_version
-        })
-        data = await res.json()
+    res = requests.get(conf.get(env, 'pollbot_server') + "/{0}/{1}".format(product, current_channel_version))
+    data = res.json()
 
     assert data["product"] == product
     assert data["version"] == current_channel_version
     assert "checks" in data
 
     for check in data["checks"]:
-        async with get_session() as session:
-            print("Testing", check["title"])
-            async with session.get(check["url"]) as resp:
-                body = await resp.json()
-                assert "status" in body
-                assert body["status"] in ["exists", "incomplete", "missing", "error"]
-                assert "message" in body
-                assert "link" in body
+        #time.sleep(2)
+        resp = requests.get(check["url"])
+        body = resp.json()
+        assert "status" in body
+        assert body["status"] in ["exists", "incomplete", "missing", "error"]
+        assert "message" in body
+        assert "link" in body
 
 
-@pytest.mark.asyncio
-async def test_firefox_nightly_checks(api, conf, env, apiversion, get_session):
-    await product_version_checks(api, get_session, "firefox", "nightly")
+def test_firefox_nightly_checks(conf, env):
+    product_version_checks(conf, env, "firefox", "nightly")
 
 
-@pytest.mark.asyncio
-async def test_firefox_beta_checks(api, conf, env, apiversion, get_session):
-    await product_version_checks(api, get_session, "firefox", "beta")
+def test_firefox_beta_checks(conf, env):
+    product_version_checks(conf, env, "firefox", "beta")
 
 
-@pytest.mark.asyncio
-async def test_firefox_release_checks(api, conf, env, apiversion, get_session):
-    await product_version_checks(api, get_session, "firefox", "release")
+def test_firefox_release_checks(conf, env):
+    product_version_checks(conf, env, "firefox", "release")
 
 
-@pytest.mark.asyncio
-async def test_firefox_esr_checks(api, conf, env, apiversion, get_session):
-    await product_version_checks(api, get_session, "firefox", "esr")
+def test_firefox_esr_checks(conf, env):
+    product_version_checks(conf, env, "firefox", "esr")
 
 
-@pytest.mark.asyncio
-async def test_devedition_checks(api, conf, env, apiversion, get_session):
-    await product_version_checks(api, get_session, "devedition", "devedition")
+def test_devedition_checks(conf, env):
+    product_version_checks(conf, env, "devedition", "devedition")
