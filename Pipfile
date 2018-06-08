@@ -9,5 +9,6 @@ aiohttp = "<3"
 pytest-testrail = "*"
 smwogger = "*"
 pytest-asyncio = "*"
+"flake8" = "*"
 
 [dev-packages]
