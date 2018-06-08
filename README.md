@@ -1,4 +1,5 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/mozilla-services/pollbot-integration-tests/blob/master/LICENSE)
+[![Build Status](https://travis-ci.org/mozilla-services/pollbot-integration-tests.svg?branch=master)](https://travis-ci.org/mozilla-services/pollbot-integration-tests)
 [![Updates](https://pyup.io/repos/github/mozilla-services/pollbot-integration-tests/shield.svg)](https://pyup.io/repos/github/mozilla-services/pollbot-integration-tests/)
 [![Python 3](https://pyup.io/repos/github/mozilla-services/pollbot-integration-tests/python-3-shield.svg)](https://pyup.io/repos/github/mozilla-services/pollbot-integration-tests/)
 
