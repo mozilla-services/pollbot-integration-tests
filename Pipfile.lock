@@ -284,10 +284,10 @@
         },
         "swagger-spec-validator": {
             "hashes": [
-                "sha256:66d01b1ee7fd43813217899723e54c4b582d613732003924cd5bfb144cbfddff",
-                "sha256:76f14cb1c734de06c66699968bcb78974e9165c5eb57ccf9b4cd9a19967ae5bf"
+                "sha256:dc902093b7c5720326aab1cf150410079d319fb5672643422555c17da127c482",
+                "sha256:f1a74627c439774edd30132d25cdb7583aa044deaf46333c745bb8b7c0461b75"
             ],
-            "version": "==2.3.0"
+            "version": "==2.3.1"
         },
         "urllib3": {
             "hashes": [
