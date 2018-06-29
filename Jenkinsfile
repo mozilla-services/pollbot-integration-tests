@@ -6,8 +6,8 @@ pipeline {
     lib('fxtest@1.10')
   }
   environment {
-    PROJECT = "${PROJECT ?: JOB_NAME.split('\\.')[0]}"
-    TEST_ENV = "${TEST_ENV ?: JOB_NAME.split('\\.')[1]}"
+    PROJECT = "${PROJECT ?: JOB_NAME.find('\\.') ? JOB_NAME.split('\\.')[0] : ''}"
+    TEST_ENV = "${TEST_ENV ?: JOB_NAME.find('\\.') ? JOB_NAME.split('\\.')[1] : ''}"
   }
   triggers {
     pollSCM('H/5 * * * *')
@@ -24,9 +24,36 @@ pipeline {
         sh "flake8"
       }
     }
-    stage('Test pollbot') {
-      steps {
-        sh "pytest --env=${TEST_ENV}"
+    stage('Test') {
+      parallel {
+        stage('pollbot.stage') {
+          when {
+            anyOf {
+              not { environment name: 'CHANGE_ID', value: '' }
+              allOf {
+                environment name: 'PROJECT', value: 'pollbot';
+                environment name: 'TEST_ENV', value: 'stage'
+              }
+            }
+          }
+          steps {
+            sh "pytest --env=stage"
+          }
+        }
+        stage('pollbot.prod') {
+          when {
+            anyOf {
+              not { environment name: 'CHANGE_ID', value: '' }
+              allOf {
+                environment name: 'PROJECT', value: 'pollbot';
+                environment name: 'TEST_ENV', value: 'prod'
+              }
+            }
+          }
+          steps {
+            sh "pytest --env=prod"
+          }
+        }
       }
     }
   }
