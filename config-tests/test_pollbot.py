@@ -50,7 +50,6 @@ def product_version_checks(conf, env, product, channel):
         assert "status" in body
         assert body["status"] in ["exists", "incomplete", "missing", "error"]
         assert "message" in body
-        assert "link" in body
 
 
 def test_firefox_nightly_checks(conf, env):
