@@ -1,5 +1,7 @@
 [![License](https://img.shields.io/badge/License-Mozilla%202.0-blue.svg)](https://github.com/mozilla-services/pollbot-integration-tests/blob/master/LICENSE)
 [![Build Status](https://travis-ci.org/mozilla-services/pollbot-integration-tests.svg?branch=master)](https://travis-ci.org/mozilla-services/pollbot-integration-tests)
+[![updates](https://api.dependabot.com/badges/status?host=github&repo=mozilla-services/pollbot-integration-tests)](https://dependabot.com)
+
 
 # Summary
 Tests for the Pollbot server fall into 3 categories:
