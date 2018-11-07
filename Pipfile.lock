@@ -254,10 +254,10 @@
         },
         "pytest-testrail": {
             "hashes": [
-                "sha256:4b4a3a892419b1ce1bbdfd093680d9f6b77efde60181f7294093270bac4e04fe"
+                "sha256:a9495252735dffcf4f9974c3ddf3499e7c0a98905ebd9bf228ed42d5bfb37d54"
             ],
             "index": "pypi",
-            "version": "==1.1.6"
+            "version": "==2.3.1"
         },
         "pyyaml": {
             "hashes": [
