@@ -6,5 +6,3 @@ install:
 script:
   - pipenv install
   - pipenv run flake8
-notifications:
-  email: fte-ci@mozilla.com
