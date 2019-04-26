@@ -248,6 +248,12 @@
             ],
             "version": "==0.15.0"
         },
+        "pyrsistent": {
+            "hashes": [
+                "sha256:b254ba347831270a2cb349386680863732b89fc79be4d1141daff1c11196ccc5"
+            ],
+            "version": "==0.15.0"
+        },
         "pytest": {
             "hashes": [
                 "sha256:488c842647bbeb350029da10325cb40af0a9c7a2fdda45aeb1dda75b60048ffb",
@@ -266,10 +272,10 @@
         },
         "pytest-testrail": {
             "hashes": [
-                "sha256:3b4e82532d0b832aa15123998ca4cc7cc6072032668c6057404bf6d4186964f9"
+                "sha256:d1981ff94fb28b485fa51c28042ea728bab5362b4f08de86aa849d398aede6fc"
             ],
             "index": "pypi",
-            "version": "==2.3.2"
+            "version": "==2.3.3"
         },
         "pyyaml": {
             "hashes": [
